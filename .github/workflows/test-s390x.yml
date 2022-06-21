@@ -37,13 +37,28 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-           sudo rm -rf $HOME/.cache/pip;
-           if echo "$TOXENV" | grep -q 'pyhash' ; then sudo apt-get -q install -y libboost-python-dev; fi
-           if echo "$TOXENV" | grep -q '^py2'   ; then pip install --upgrade pip virtualenv; fi
+          python -m pip install --upgrade pip 'setuptools<58' --force-reinstall
+          pip install 'tox<4' tox-gh-actions flake8 pytest
       - name: Tests with tox
         env:
           TOXENV: ${{ matrix.toxenv }}
         run: |
+          tox
+      - name: py27
+        if: ${{ matrix.python-version==2.7 }}
+        env:
+          TOXENV: py27
+        run: |
+          sudo rm -rf $HOME/.cache/pip
+          pip install --upgrade pip virtualenv
+          tox
+      - name: py37
+        if: ${{ matrix.python-version==3.7 }}
+        env:
+          TOXENV: py37
+        run: |
+          sudo rm -rf $HOME/.cache/pip
+          sudo apt-get -q install -y libboost-python-dev
           tox
       - name: Linting
         if: ${{ matrix.python-version==3.10 }}
