@@ -18,8 +18,8 @@ jobs:
           distro: ubuntu18.04
           run: |
             apt-get update
-            apt-get install sudo
-            sudo apt-get install python2.7
+            apt-get install sudo 
+            sudo apt-get install python2.7 -y
             python2.7 -m pip install --upgrade pip 'setuptools<58' --force-reinstall
             pip install 'tox<4' tox-gh-actions flake8 pytest
             if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
