@@ -19,7 +19,7 @@ jobs:
           run: |
             apt-get update
             apt-get install sudo 
-            sudo apt-get install python2.7 -y
+            sudo apt-get install python2.7 git -y
             sudo apt-get install python-pip -y
             python2.7 -m pip install --upgrade pip 'setuptools<58' --force-reinstall
             pip install 'tox<4' tox-gh-actions flake8 pytest
