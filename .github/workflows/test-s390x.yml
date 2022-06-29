@@ -17,8 +17,9 @@ jobs:
           arch: s390x
           distro: ubuntu18.04
           run: |
-            sudo apt update
-            sudo apt install python2-minimal
+            apt-get update
+            apt-get install sudo
+            sudo apt-get install python2-minimal
             python2 -m pip install --upgrade pip 'setuptools<58' --force-reinstall
             pip install 'tox<4' tox-gh-actions flake8 pytest
             if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
