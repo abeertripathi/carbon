@@ -9,30 +9,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-18.04
-    
-    steps :
-    - name: Run build 
-    - uses: actions/checkout@v2
-    - name: Set up Python 2.7
-      uses: actions/setup-python@v2
-      with:
-        arch: s390x
-        distro: ubuntu18.04
-        python-version: 2.7
-    - name: Install Dependecies 
-      uses: uraimo/run-on-arch-action@v2.0.9
-      with:
-        arch: s390x
-        distro: ubuntu18.04
-        run : |
-          python -m pip install --upgrade pip 'setuptools<58' --force-reinstall
-          pip install 'tox<4' tox-gh-actions flake8 pytest
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Tests with tox
-      env:
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 2.7  
+        uses: uraimo/run-on-arch-action@v2.0.9
+        with:
+          arch: s390x
+          distro: ubuntu18.04
+          run : |
+            sudo apt update
+            sudo apt install python2-minimal
+            python2 -m pip install --upgrade pip 'setuptools<58' --force-reinstall
+            pip install 'tox<4' tox-gh-actions flake8 pytest
+            if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Tests with tox
+        env:
           TOXENV: py27
-      with:
-        arch: s390x
-        distro: ubuntu18.04
-        run: |
-          tox
+        with:
+          arch: s390x
+          distro: ubuntu18.04
+          run: |
+            tox
