@@ -14,7 +14,7 @@ jobs:
       - name: Set up Python 2.7  
         uses: uraimo/run-on-arch-action@v2
         env:
-            TOXENV: "py27"
+            TOXENV: py27
         with:
           arch: s390x
           distro: ubuntu18.04
