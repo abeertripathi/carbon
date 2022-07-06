@@ -26,4 +26,5 @@ jobs:
             if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
             curl -o rustup.sh https://sh.rustup.rs
             sudo bash rustup.sh -y
+            sudo apt-get install cargo -y
             tox -e py36
