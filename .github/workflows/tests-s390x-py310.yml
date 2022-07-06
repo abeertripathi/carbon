@@ -8,26 +8,15 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.10  
         uses: uraimo/run-on-arch-action@v2
         with:
           arch: s390x
-          distro: ubuntu18.04
+          distro: ubuntu-latest
           run: |
             apt-get update
-            apt-get install sudo 
-            sudo apt-get install curl git wget -y
-            sudo wget -q https://raw.githubusercontent.com/linux-on-ibm-z/scripts/master/Python3/3.10.4/build_python3.sh
-            sudo bash build_python3.sh -y
-            sudo apt-get install python3-pip build-essential libssl-dev libffi-dev python3-dev -y
-            python3 -m pip install --upgrade pip 'setuptools<58' --force-reinstall
-            pip3 install 'tox<4' tox-gh-actions flake8 pytest
-            if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
-            curl -o rustup.sh https://sh.rustup.rs
-            sudo bash rustup.sh -y
-            sudo apt-get install cargo -y
-            tox -e py310
+            cat /etc/os-release 
 
