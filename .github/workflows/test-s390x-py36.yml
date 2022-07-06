@@ -24,5 +24,6 @@ jobs:
             python3 -m pip install --upgrade pip 'setuptools<58' --force-reinstall
             pip3 install 'tox<4' tox-gh-actions flake8 pytest
             if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
-            curl https://sh.rustup.rs -sSf | sh
+            curl -o rustup.sh https://sh.rustup.rs
+            sudo bash rustup.sh -y
             tox -e py36
