@@ -13,42 +13,29 @@ jobs:
     strategy:
       matrix:
         include:
+          - name: "Python 2.7"
+            python-version: '2.7'
+            toxenv: "py27"
+          - name: "Python 3.7"
+            python-version: '3.7'
+            toxenv: 'py37'
+          - name: "Python 3.8"
+            python-version: '3.8'
+            toxenv: 'py38'
+          - name: "Python 3.9"
+            python-version: '3.9'
+            toxenv: 'py39'
           - name: "Python 3.10"
             python-version: '3.10'
             toxenv: 'py310'
     
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          arch: 's390x'
-          python-version: '${{ matrix.python-version }}'
-      - run: python my_script.py
-      - uses: uraimo/run-on-arch-action@v3
+      - uses: actions/checkout@v3      
+      - uses: uraimo/run-on-arch-action@v2
         with:
           arch: s390x
-          distro: ubuntu20.04
-          run: |
-            sudo apt-get install curl git cargo -y
-            python -m pip install --upgrade pip 'setuptools<58' --force-reinstall
-            pip install 'tox<4' tox-gh-actions flake8 pytest
-            if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-            curl -o rustup.sh https://sh.rustup.rs
-            sudo bash rustup.sh -y
-            tox -e ${{ matrix.toxenv }}
-      - name: Linting
-        if: ${{ matrix.python-version==3.10 }}
-        env:
-          TOXENV: lint
-        run: |
-          tox
-      - name: Run Codecov
-        if: ${{ matrix.python-version==3.10 }}
-        env:
-          TOXENV: lint
-        run: |
-          pip install codecov
-          codecov
-      - name: Upload coverage to Codecov
-        if: ${{ matrix.python-version==3.10 }}
-        uses: codecov/codecov-action@v1
+          distro: ubuntu20.04    
+      - uses : actions/setup-python@v4
+        with:
+          python-version: '${{ matrix.python-version }}'
+      - run: python my_script.py
