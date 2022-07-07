@@ -17,6 +17,7 @@ jobs:
           arch: s390x
           distro: ubuntu20.04
           run: |
+            apt-get update
             apt-get install sudo
             sudo apt-get install curl git wget -y
             sudo apt-get install python3 -y
