@@ -16,16 +16,16 @@ jobs:
         with:
           arch: s390x
           distro: ubuntu20.04
-          before_install: |
+          install: |
             apt-get update
             apt-get install curl git wget -y
             apt-get install python3 -y
             apt-get install python3-pip libssl-dev libffi-dev python3-dev cargo -y
-          install: |            
+          shell: |            
             python3 -m pip install --upgrade pip 'setuptools<58' --force-reinstall
             pip3 install 'tox<4' tox-gh-actions flake8 pytest
             if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
             curl -o rustup.sh https://sh.rustup.rs
-            sudo bash rustup.sh -y
+            bash rustup.sh -y
           run: |
             tox -e py38
