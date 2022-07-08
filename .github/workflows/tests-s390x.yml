@@ -16,7 +16,7 @@ jobs:
         with:
           arch: s390x
           distro: ubuntu20.04
-          run: |
+          install: |
             apt-get update
             apt-get install sudo
             sudo apt-get install curl git wget -y
@@ -27,4 +27,5 @@ jobs:
             if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
             curl -o rustup.sh https://sh.rustup.rs
             sudo bash rustup.sh -y
+          run: |
             tox -e py38
