@@ -36,10 +36,11 @@ jobs:
             toxenv: 'py310'
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:          
+      - uses: uraimo/run-on-arch-action@v2
+        with:
           arch: s390x
-          distro: ubuntu20.04
+          distro: ubuntu20.04          
           python-version: ${{ matrix.python-version }}
-      - run: python -v
+          uses: actions/setup-python@v2
+          run: | 
+            python -v
